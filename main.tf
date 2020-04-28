@@ -1,9 +1,9 @@
 resource "aws_elastic_beanstalk_application" "ndw-test" {
-  name        = "ndw-test"
+  name        = var.app_name
 }
 
 resource "aws_elastic_beanstalk_environment" "ndw-test" {
-  name                = "ndw-test"
+  name                = var.environment_name
   application         = "${aws_elastic_beanstalk_application.ndw-test.name}"
   solution_stack_name = "64bit Amazon Linux 2018.03 v2.10.4 running Java 8" #https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/concepts.platforms.html#concepts.platforms.javase
 
@@ -15,7 +15,7 @@ resource "aws_elastic_beanstalk_environment" "ndw-test" {
 }
 
 resource "aws_iam_role" "ndw" {
-  name = "ndw_iam"
+  name = var.iam_role_name
 
   assume_role_policy = <<EOF
 {
@@ -43,7 +43,7 @@ resource "aws_iam_role_policy_attachment" "ndw-attach" {
 }
 
 resource "aws_iam_instance_profile" "ndw-profile" {
-  name = "ndw_profile"
+  name = var.iam_instance_profile_name
   role = "${aws_iam_role.ndw.name}"
 }
 
