@@ -12,7 +12,6 @@ branches:
     
 # Install dependencies
 before_install:
-  - pyenv global 3.7.1
   - pip install -U pip
   - pip install awscli
   - wget https://releases.hashicorp.com/terraform/"$tf_version"/terraform_"$tf_version"_linux_amd64.zip
