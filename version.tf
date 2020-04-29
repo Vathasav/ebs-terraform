@@ -12,7 +12,7 @@ resource "aws_elastic_beanstalk_application_version" "default" {
 }
 
 data "aws_s3_bucket" "ndw-test" {
-  bucket = "ndw-test"
+  bucket = "ndw-snapshot"
 }
 
 data "aws_s3_bucket_object" "application-jar" {
