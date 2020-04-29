@@ -1,4 +1,4 @@
-variable "version" {
+variable "appversion" {
   type = "string"
   default = "0.1-SNAPSHOT"
 }
@@ -17,5 +17,5 @@ data "aws_s3_bucket" "ndw-test" {
 
 data "aws_s3_bucket_object" "application-jar" {
   bucket = "${data.aws_s3_bucket.ndw-test.id}"
-  key    = "ndw-snapshot/0.1/ndw-${var.version}.jar"
+  key    = "ndw-snapshot/0.1/ndw-${var.appversion}.jar"
 }
