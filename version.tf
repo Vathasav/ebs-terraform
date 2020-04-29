@@ -4,7 +4,7 @@ variable "appversion" {
 }
 
 resource "aws_elastic_beanstalk_application_version" "default" {
-  name        = "elastic-beanstalk-ndw-${var.version}"
+  name        = "elastic-beanstalk-ndw-${var.appversion}"
   application = "${aws_elastic_beanstalk_application.ndw-test.name}"
   description = "application version created by terraform"
   bucket      = "${data.aws_s3_bucket.ndw-test.id}"
