@@ -1,7 +1,7 @@
 terraform {
   backend "s3" {
     bucket = "ndw-snapshot"
-    key    = "0.1"
+    key    = "global/s3/terraform.tfstate"
     region = "eu-north-1"
   }
 }
