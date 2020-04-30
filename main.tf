@@ -13,13 +13,12 @@ resource "aws_elastic_beanstalk_environment" "ndw-test" {
     value     = "${aws_iam_instance_profile.ndw-profile.name}"
   }
   
-  additional_settings = [
-      {
-        namespace = "aws:elasticbeanstalk:application:environment"
-        name      = "PORT"
-        value     = "8080"
-      }
-   ]
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "PORT"
+    value     = "8080"
+  }
+  
 }
 
 resource "aws_iam_role" "ndw" {
