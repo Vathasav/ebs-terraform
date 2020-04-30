@@ -38,6 +38,8 @@ jobs:
       if: type IN (push) and branch = master
       script:
         - echo "Executing Terraform Apply on merged code"
+        - aws iam delete-instance-profile --instance-profile-name ndw-profile
         - terraform init $tf_init_cli_options
+        - terraform plan $tf_plan_cli_options
         - terraform apply $tf_apply_cli_options
         - $(terraform output aws_command)
