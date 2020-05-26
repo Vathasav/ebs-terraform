@@ -3,7 +3,7 @@ dist: xenial # Ubuntu 16.04
 language: bash
 
 env:
-  - tf_version=0.12.19 tf_init_cli_options="-input=false" tf_validation_cli_options="" tf_plan_cli_options="-lock=false -input=false" tf_apply_cli_options="-auto-approve -input=false"
+  - tf_version=0.12.19 tf_init_cli_options="-input=false" tf_validation_cli_options="" tf_plan_cli_options="-lock=false -input=false" tf_apply_cli_options="-auto-approve -input=false" DESTROY=true
 
 # Only build pushes to master branch
 branches:
@@ -42,9 +42,10 @@ jobs:
         - terraform init $tf_init_cli_options
         - |
           if [ "$DESTROY" == "true" ]; then
+             echo "Destroying resources created via Terraform"
              terraform destroy -auto-approve -var-file="input.tfvars"
-             exit 0
           else
+             echo "Creating resources via Terraform"
              terraform plan $tf_plan_cli_options -var-file="input.tfvars"
              terraform apply $tf_apply_cli_options -var-file="input.tfvars"
              $(terraform output aws_command)             
