@@ -40,7 +40,12 @@ jobs:
       script:
         - echo "Executing Terraform Apply on merged code"
         - terraform init $tf_init_cli_options
-        - if [ "$DESTROY"=="true" ]; then terraform destroy -auto-approve -var-file="input.tfvars" && exit 0; fi
-        - terraform plan $tf_plan_cli_options -var-file="input.tfvars"
-        - terraform apply $tf_apply_cli_options -var-file="input.tfvars"
-        - $(terraform output aws_command)
+        - |
+          if [ "$DESTROY" == "true" ]; then
+             terraform destroy -auto-approve -var-file="input.tfvars"
+             exit 0
+          else
+             terraform plan $tf_plan_cli_options -var-file="input.tfvars"
+             terraform apply $tf_apply_cli_options -var-file="input.tfvars"
+             $(terraform output aws_command)             
+          fi
