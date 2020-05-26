@@ -12,10 +12,15 @@ branches:
     
 # Install dependencies
 before_install:
+  - curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"
+  - unzip awscli-bundle.zip
+  - ./awscli-bundle/install -b ~/bin/aws
+  - export PATH=~/bin:$PATH
   - wget https://releases.hashicorp.com/terraform/"$tf_version"/terraform_"$tf_version"_linux_amd64.zip
   - unzip terraform_"$tf_version"_linux_amd64.zip
   - sudo mv terraform /usr/local/bin/
   - rm terraform_"$tf_version"_linux_amd64.zip
+  
   
 # Terraform Plan and Apply
 # Plan only on pull requests, Apply on merged code
@@ -28,12 +33,14 @@ jobs:
         - echo "Executing Terraform Plan on pull request code"
         - terraform init $tf_init_cli_options
         - terraform validate $tf_validation_cli_options
-        - terraform plan $tf_plan_cli_options
+        - terraform plan $tf_plan_cli_options -var-file="input.tfvars"
     - stage: terraform apply
       # Only run terraform apply stage if outside of a pull request
       if: type IN (push) and branch = master
       script:
         - echo "Executing Terraform Apply on merged code"
         - terraform init $tf_init_cli_options
-        - terraform apply $tf_apply_cli_options
+        - if [ "$DESTROY"=="true" ]; then terraform destroy -auto-approve -var-file="input.tfvars" && exit 0; fi
+        - terraform plan $tf_plan_cli_options -var-file="input.tfvars"
+        - terraform apply $tf_apply_cli_options -var-file="input.tfvars"
         - $(terraform output aws_command)
