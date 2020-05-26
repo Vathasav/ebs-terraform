@@ -17,3 +17,10 @@ variable "iam_instance_profile_name" {
   default = "ndw-profile"
   description = "The name of instance profile"
 }
+
+variable "s3_bucket_name" {
+}
+
+variable "s3_bucket_key" {
+}
+
