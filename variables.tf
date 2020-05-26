@@ -24,3 +24,8 @@ variable "s3_bucket_name" {
 variable "s3_bucket_key" {
 }
 
+variable "appversion" {
+  type = "string"
+  default = "0.1-SNAPSHOT"
+}
+
