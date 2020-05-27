@@ -1,5 +1,5 @@
 
-module "java-webapp" {
+module "dev-webapp" {
     source = "./modules/java-webapp"
     
     app_name = var.app_name
