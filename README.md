@@ -18,7 +18,7 @@ This project shows how infrastructure as code tools like terraform can be used t
 
 4. Visit aws elastic beanstalk console to get url to access the application
 
-5. To delete the created resources change line 6 in [.travis.yml](.travis.yml) file with DELETE=true and file a PR. Once the PR is merged terraform will destroy resources.
+5. To delete the created resources change line 6 in [.travis.yml](.travis.yml) file with DESTROY=true and file a PR. Once the PR is merged terraform will destroy resources.
 
 6. To create different environments extend the main.tf file with new modules for staging, production.
 
